@@ -110,6 +110,49 @@ void Brisanjerac(unsigned long long brRacuna[], string ime[], double stnr[], int
     }
 }
 
+int Binarnopret(unsigned long long brRacuna[], int l, int r, unsigned long long x)
+{
+    while(l <= r)
+    {
+        int m = l+(r-l)/2;
+        if(brRacuna[m] == x)
+        {
+            return m;
+        }
+        if(brRacuna[m] < x)
+        {
+            l = m+1;
+        }
+        else
+        {
+            r = m-1;
+        }
+    }
+    return -1;
+}
+void Izmrac(unsigned long long brRacuna[], string ime[], double stnr[], int brKlijenata)
+{
+    unsigned long long dRac;
+    cout << "Upisite br. racuna koji zelite promijeniti: ";
+    cin >> dRac;
+    if(Binarnopret(brRacuna, 0, brKlijenata-1, dRac)>-1)
+    {
+        unsigned long long novira = brRacuna[Binarnopret(brRacuna, 0, brKlijenata-1, dRac)];
+        cout << "Upisite novi broj racuna: ";
+        cin >>novira;
+        cout << "Upisite prezime i ime: ";
+        cin.ignore();
+        getline(cin, ime[Binarnopret(brRacuna, 0, brKlijenata-1, dRac)]);
+        cout << "Upisite novo stanje na racunu: ";
+        cin >> stnr[Binarnopret(brRacuna, 0, brKlijenata-1, dRac)];
+        cout << "Racun uspjesno izmjenjen!" << endl;
+        brRacuna[Binarnopret(brRacuna, 0, brKlijenata-1, dRac)] = novira;
+    }
+    else if(Binarnopret(brRacuna, 0, brKlijenata-1, dRac) <= -1)
+    {
+        cout << "Takav racun ne postoji" << endl;
+    }
+}
 
 void Sortit(unsigned long long brRacuna[], string ime[], double stnr[], int brKlijenata)
 {
@@ -146,4 +189,69 @@ void Sortit(unsigned long long brRacuna[], string ime[], double stnr[], int brKl
     {
         cout << "Broj racuna: " << sortBrRac[i] << endl << "Ime i prezime: " << sortIme[i] << endl << "Stanje na racunu: " << sortStnr[i] << endl << endl;
     }
+}
+
+int main()
+{
+    int brKlijenta = 0;
+    unsigned long long *brRacuna = new unsigned long long[1000];
+    string *ime = new string[1000];
+    double *stnr = new double[1000];
+    int chs;
+    while(1)
+    {
+        cout << "1. Unos novog racuna" << endl;
+        cout << "2. Ispis svih podataka" << endl;
+        cout << "3. Pretraga po prezimenu i imenu" << endl;
+        cout << "4. Brisanje racuna" << endl;
+        cout << "5. Izmjena po broju racuna" << endl;
+        cout << "6. Sortiranje po imenu" << endl;
+        cout << "7. Izlaz" << endl;
+        cin >> chs;
+        if(chs==1)
+        {
+            NewRac(brRacuna, ime, stnr, brKlijenta);
+            brKlijenta++;
+        }
+        if(chs == 2)
+        {
+            if(brKlijenta>0)
+            {
+                double s;
+                string bist;
+                int brNegativnih;
+                int brTekucih;
+                IspisPod(brRacuna, ime, stnr, brKlijenta, s, bist, brNegativnih, brTekucih);
+                cout << "Zbroj novaca: " << s << endl << "Racun sa najvise novaca: " << bist << endl << "Negativni racuni: " << brNegativnih << endl << "Broj tekucih racuna: " << brTekucih << endl;
+            }
+            else
+            {
+                cout << "Nema racuna koje mozemo prikazati" << endl;
+            }
+        }
+        if(chs == 3)
+        {
+            ImePrezime(brRacuna, ime, stnr, brKlijenta);
+        }
+        if(chs == 4)
+        {
+            int pr = 0;
+            Brisanjerac(brRacuna, ime, stnr, brKlijenta, pr);
+            brKlijenta-=pr;
+        }
+        if(chs == 5)
+        {
+            Izmrac(brRacuna, ime, stnr, brKlijenta);
+        }
+        if(chs == 6)
+        {
+            Sortit(brRacuna, ime, stnr, brKlijenta);
+        }
+        if(chs == 7)
+        {
+            break;
+        }
+    }
+    return 0;
+
 }
