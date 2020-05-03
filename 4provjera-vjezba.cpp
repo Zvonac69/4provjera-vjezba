@@ -61,3 +61,25 @@ void IspisPod(unsigned long long brRacuna[], string ime[], double stnr[], int br
     brNegativnih = count_if(brRacuna, brRacuna+brKlijenata, negativan);
     brTekucih = count_if(brRacuna, brRacuna+brKlijenata, tekuci);
 }
+
+void ImePrezime(unsigned long long brRacuna[], string ime[], double stnr[], int brKlijenata)
+{
+    cout << "Upisite prezime i ime: ";
+    string pretraga;
+    cin.ignore();
+    getline(cin, pretraga);
+    int z = 0;
+    for(int i=0; i<brKlijenata; i++)
+    {
+        if(pretraga == ime[i])
+        {
+            cout << "Broj racuna: " << brRacuna[i] << endl << "Stanje na racunu: " << stnr[i]<< endl << endl;
+            z++;
+        }
+        else if(z == 0 && i == brKlijenata-1)
+        {
+            cout << "Takav racun ne postoji" << endl;
+        }
+    }
+}
+
