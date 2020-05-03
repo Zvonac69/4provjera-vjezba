@@ -61,3 +61,52 @@ void IspisPod(unsigned long long brRacuna[], string ime[], double stnr[], int br
     brNegativnih = count_if(brRacuna, brRacuna+brKlijenata, negativan);
     brTekucih = count_if(brRacuna, brRacuna+brKlijenata, tekuci);
 }
+
+void ImePrezime(unsigned long long brRacuna[], string ime[], double stnr[], int brKlijenata)
+{
+    cout << "Upisite prezime i ime: ";
+    string pretraga;
+    cin.ignore();
+    getline(cin, pretraga);
+    int z = 0;
+    for(int i=0; i<brKlijenata; i++)
+    {
+        if(pretraga == ime[i])
+        {
+            cout << "Broj racuna: " << brRacuna[i] << endl << "Stanje na racunu: " << stnr[i]<< endl << endl;
+            z++;
+        }
+        else if(z == 0 && i == brKlijenata-1)
+        {
+            cout << "Takav racun ne postoji" << endl;
+        }
+    }
+}
+
+void Brisanjerac(unsigned long long brRacuna[], string ime[], double stnr[], int brKlijenata, int &pr)
+{
+    unsigned long long dRac;
+    cout << "Upisite br. racuna koji zelite izbrisati: ";
+    cin >> dRac;
+    int z = 0;
+    for(int i=0; i<brKlijenata; i++)
+    {
+        if(dRac == brRacuna[i])
+        {
+            for(int j = i; j < brKlijenata-1; j++)
+            {
+                brRacuna[j] = brRacuna[j+1];
+                ime[j] = ime[j+1];
+                stnr[j] = stnr[j+1];
+            }
+            pr++;
+            z++;
+            cout << "Racun uspjesno izbrisan" << endl;
+        }
+        else if( z== 0 && i == brKlijenata-1)
+        {
+            cout << "Takav racun ne postoji" << endl;
+        }
+    }
+}
+
