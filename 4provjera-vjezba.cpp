@@ -31,3 +31,33 @@ void NewRac(unsigned long long brRacuna[], string ime[], double stnr[], int brKl
     cin>>stnr[brKlijenata];
 }
 
+bool negativan(double br)
+{
+    if(br < 0)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool tekuci(unsigned long long br)
+{
+    if(br/100000000 == 32)
+    {
+        return true;
+    }
+    return false;
+}
+
+void IspisPod(unsigned long long brRacuna[], string ime[], double stnr[], int brKlijenata, double &s, string &bist, int &brNegativnih, int &brTekucih)
+{
+    for(int i=0; i<brKlijenata; i++)
+    {
+        cout << "Broj racuna: " << brRacuna[i] << endl << "Ime i prezime: " << ime[i] <<endl << "Stanje na racunu: " << stnr[i] << endl << endl;
+    }
+    s = accumulate(stnr, stnr+brKlijenata, 0);
+    int maxi = max_element(stnr, stnr+brKlijenata)-stnr;
+    bist = ime[maxi];
+    brNegativnih = count_if(brRacuna, brRacuna+brKlijenata, negativan);
+    brTekucih = count_if(brRacuna, brRacuna+brKlijenata, tekuci);
+}
