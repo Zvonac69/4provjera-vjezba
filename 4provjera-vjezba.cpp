@@ -110,3 +110,40 @@ void Brisanjerac(unsigned long long brRacuna[], string ime[], double stnr[], int
     }
 }
 
+
+void Sortit(unsigned long long brRacuna[], string ime[], double stnr[], int brKlijenata)
+{
+    unsigned long long *sortBrRac = new unsigned long long[1000];
+    string *sortIme = new string[1000];
+    double *sortStnr = new double[1000];
+    for(int i = 0; i < brKlijenata; i++)
+    {
+        sortBrRac[i] = brRacuna[i];
+        sortIme[i] = ime[i];
+        sortStnr[i] = stnr[i];
+    }
+    for(int i = 0; i < brKlijenata-1; i++)
+    {
+        for(int j = 0; j < brKlijenata-1-i; j++)
+        {
+            if(ime[j] > ime[j+1])
+            {
+                unsigned long long temp = sortBrRac[j];
+                sortBrRac[j] = sortBrRac[j+1];
+                sortBrRac[j+1] = temp;
+
+                string tomp = sortIme[j];
+                sortIme[j] = sortIme[j+1];
+                sortIme[j+1] = tomp;
+
+                double timp = sortStnr[j];
+                sortStnr[j]  =sortStnr[j+1];
+                sortStnr[j+1] = timp;
+            }
+        }
+    }
+    for(int i=0; i<brKlijenata; i++)
+    {
+        cout << "Broj racuna: " << sortBrRac[i] << endl << "Ime i prezime: " << sortIme[i] << endl << "Stanje na racunu: " << sortStnr[i] << endl << endl;
+    }
+}
